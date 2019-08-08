@@ -18,23 +18,16 @@ QMAKE_LFLAGS += -static -static-libgcc
 
 RC_ICONS = app.ico
 
-isEmpty(TARGET_EXT) {
-    win32 {
-        TARGET_CUSTOM_EXT = .exe
-    }
-    macx {
-        TARGET_CUSTOM_EXT = .app
-    }
-} else {
-    TARGET_CUSTOM_EXT = $${TARGET_EXT}
-}
-
-win32 {
-    DEPLOY_COMMAND = windeployqt
-}
-macx {
-    DEPLOY_COMMAND = macdeployqt
-}
+#isEmpty(TARGET_EXT) {
+#    win32 {
+#        TARGET_CUSTOM_EXT = .exe
+#    }
+#    macx {
+#        TARGET_CUSTOM_EXT = .app
+#    }
+#} else {
+#    TARGET_CUSTOM_EXT = $${TARGET_EXT}
+#}
 
 CONFIG( debug, debug|release ) {
     # debug
@@ -86,8 +79,15 @@ FORMS += \
         mainwindow.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+#qnx: target.path = /tmp/$${TARGET}/bin
+#else: unix:!android: target.path = /opt/$${TARGET}/bin
+#!isEmpty(target.path): INSTALLS += target
 
 RESOURCES += res.qrc
+
+TRANSLATIONS += \
+    Translations/IOPSMaster_en.ts
+
+DISTFILES += \
+    Translations/IOPSMaster_en.ts
+

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.2, 2019-08-07T11:49:53. -->
+<!-- Written by QtCreator 4.9.2, 2019-08-08T21:08:21. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -60,17 +60,17 @@
    </valuelist>
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
    <value type="bool" key="ClangTools.BuildBeforeAnalysis">false</value>
-   <value type="QString" key="ClangTools.DiagnosticConfig">Builtin.TidyClangAnalyze</value>
+   <value type="QString" key="ClangTools.DiagnosticConfig">Builtin.EverythingWithExceptions</value>
    <valuelist type="QVariantList" key="ClangTools.SelectedDirs">
     <value type="QString">E:/ProjectQT/IOPSMaster/IOPSMaster/modeling</value>
    </valuelist>
    <valuelist type="QVariantList" key="ClangTools.SelectedFiles">
+    <value type="QString">E:/ProjectQT/IOPSMaster/IOPSMaster/main.cpp</value>
     <value type="QString">E:/ProjectQT/IOPSMaster/IOPSMaster/mainwindow.cpp</value>
     <value type="QString">E:/ProjectQT/IOPSMaster/IOPSMaster/about.cpp</value>
-    <value type="QString">E:/ProjectQT/IOPSMaster/IOPSMaster/main.cpp</value>
    </valuelist>
    <valuelist type="QVariantList" key="ClangTools.SuppressedDiagnostics"/>
-   <value type="bool" key="ClangTools.UseGlobalSettings">false</value>
+   <value type="bool" key="ClangTools.UseGlobalSettings">true</value>
   </valuemap>
  </data>
  <data>
@@ -590,7 +590,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/ProjectQT/IOPSMaster/build-IOPSMaster-Desktop_Qt_5_13_0_MinGW_32_bit-Release</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default"></value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

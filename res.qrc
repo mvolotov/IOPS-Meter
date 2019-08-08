@@ -5,5 +5,8 @@
         <file>Assets/run.png</file>
         <file>Assets/save.png</file>
         <file>Assets/screenshot.png</file>
+        <file>Translations/IOPSMaster_en.qm</file>
+        <file>Assets/English.png</file>
+        <file>Assets/Russian.png</file>
     </qresource>
 </RCC>

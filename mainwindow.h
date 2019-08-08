@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QVector>
 #include "modeling/simulation.h"
+#include <QTranslator>
+#include <QLocale>
+#include <QEvent>
 
 namespace Ui {
 class MainWindow;
@@ -16,7 +19,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
 
 public slots:
     void getSimStatus(QString);
@@ -32,6 +34,10 @@ private slots:
 
     void on_menu_exit_triggered();
 
+    void on_languageEn_triggered();
+
+    void on_languageRu_triggered();
+
 private:
     Ui::MainWindow *ui;
     void readFile(QString);
@@ -42,6 +48,10 @@ private:
     void printDensGraph(density*);
     void printDistGraph(distribution*);
     void printSimGraph(simulation*);
+
+    QTranslator *qtLanguageTranslator;
+    void changeTranslator(QString);
+    void changeEvent(QEvent*);
 };
 
 #endif // MAINWINDOW_H

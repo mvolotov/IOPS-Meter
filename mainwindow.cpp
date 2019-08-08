@@ -31,11 +31,31 @@ void MainWindow::getSimStatus(QString msg)
     ui->statusBar->showMessage(msg);
 }
 
+void MainWindow::changeTranslator(QString postfix)
+{
+    qDebug() << "ChangeTranslator call!";
+    QApplication::removeTranslator(qtLanguageTranslator);
+    qtLanguageTranslator = new QTranslator(this);
+    qtLanguageTranslator->load(":/Translations/IOPSMaster_" + postfix);
+    QApplication::installTranslator(qtLanguageTranslator);
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+
+    if(event->type() == QEvent::LanguageChange){
+        qDebug() << "ChangeEvent call!";
+        ui->retranslateUi(this);
+    }else{
+        QMainWindow::changeEvent(event);
+    }
+}
+
 void MainWindow::on_pushButton_clicked()
 {
     if(read_Data.length() == 0 || write_Data.length() == 0){
         QMessageBox msgBox;
-        msgBox.setText("Нет исходных данных, выберите файл!");
+        msgBox.setText(tr("Нет исходных данных, выберите файл!"));
         msgBox.exec();
 
         on_selectFile_clicked();
@@ -100,22 +120,22 @@ void MainWindow::on_pushButton_2_clicked()
         ui->tab->clearGraphs();
         ui->tab->clearItems();
         ui->tab->replot();
-        ui->statusBar->showMessage("Очистка графика плотности вероятности", 1000);
+        ui->statusBar->showMessage(tr("Очистка графика плотности вероятности"), 1000);
     }else if(ui->tabWidget->currentIndex()==1){
         ui->tab_2->clearGraphs();
         ui->tab_2->clearItems();
         ui->tab_2->replot();
-        ui->statusBar->showMessage("Очистка графика распределения вероятностей", 1000);
+        ui->statusBar->showMessage(tr("Очистка графика распределения вероятностей"), 1000);
     }else if(ui->tabWidget->currentIndex()==2){
         ui->tab_3->clearGraphs();
         ui->tab_3->clearItems();
         ui->tab_3->replot();
-        ui->statusBar->showMessage("Очистка графика симуляции", 1000);
+        ui->statusBar->showMessage(tr("Очистка графика симуляции"), 1000);
     }else if(ui->tabWidget->currentIndex()==3){
         ui->tab_4->clearGraphs();
         ui->tab_4->clearItems();
         ui->tab_4->replot();
-        ui->statusBar->showMessage("Очистка графика распределения вероятностей симуляции", 1000);
+        ui->statusBar->showMessage(tr("Очистка графика распределения вероятностей симуляции"), 1000);
     }
 }
 
@@ -123,7 +143,7 @@ void MainWindow::on_selectFile_clicked()
 {
     read_Data.clear();
     write_Data.clear();
-    QString dataFile = QFileDialog::getOpenFileName(nullptr,"Select a file","");
+    QString dataFile = QFileDialog::getOpenFileName(nullptr,tr("Выберите файл"),"");
     ui->filePath->setText(dataFile);
     readFile(dataFile);
 }
@@ -154,27 +174,27 @@ void MainWindow::printDensGraph(density* dens)
     ui->tab->clearGraphs();
     ui->tab->clearItems();
     ui->tab->replot();
-    ui->statusBar->showMessage("Очистка графика плотности вероятности", 500);
+    ui->statusBar->showMessage(tr("Очистка графика плотности вероятности"), 500);
 
     // add the text label at the top:
     QCPItemText *textLabel = new QCPItemText(ui->tab);
     textLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
     textLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     textLabel->position->setCoords(0.5, 0); // place position at center/top of axis rect
-    textLabel->setText("Плотность вероятности операций ввода вывода");
+    textLabel->setText(tr("Плотность вероятности операций ввода вывода"));
     textLabel->setFont(QFont(font().family(), 12)); // make font a bit larger
 
     ui->tab->addGraph();
     ui->tab->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
     ui->tab->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-    ui->tab->graph(0)->setName("Read");
+    ui->tab->graph(0)->setName(tr("Чтение"));
     ui->tab->addGraph();
     ui->tab->graph(1)->setPen(QPen(Qt::red)); // line color red for second graph
-    ui->tab->graph(1)->setName("Write");
+    ui->tab->graph(1)->setName(tr("Запись"));
 
 
-    ui->tab->xAxis->setLabel("IO/s");
-    ui->tab->yAxis->setLabel("Вероятность");
+    ui->tab->xAxis->setLabel(tr("IO/s"));
+    ui->tab->yAxis->setLabel(tr("Вероятность"));
     // configure right and top axis to show ticks but no labels:
     // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
     ui->tab->xAxis2->setVisible(true);
@@ -207,26 +227,26 @@ void MainWindow::printDistGraph(distribution* dist)
     ui->tab_2->clearGraphs();
     ui->tab_2->clearItems();
     ui->tab_2->replot();
-    ui->statusBar->showMessage("Очистка графика распределения вероятностей", 500);
+    ui->statusBar->showMessage(tr("Очистка графика распределения вероятностей"), 500);
 
     // add the text label at the top:
     QCPItemText *textLabel = new QCPItemText(ui->tab_2);
     textLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
     textLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     textLabel->position->setCoords(0.5, 0); // place position at center/top of axis rect
-    textLabel->setText("Распределение вероятностей операций ввода вывода");
+    textLabel->setText(tr("Распределение вероятностей операций ввода вывода"));
     textLabel->setFont(QFont(font().family(), 12)); // make font a bit larger
 
     ui->tab_2->addGraph();
     ui->tab_2->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-    ui->tab_2->graph(0)->setName("Read");
+    ui->tab_2->graph(0)->setName(tr("Чтение"));
     ui->tab_2->addGraph();
     ui->tab_2->graph(1)->setPen(QPen(Qt::red)); // line color red for second graph
-    ui->tab_2->graph(1)->setName("Write");
+    ui->tab_2->graph(1)->setName(tr("Запись"));
 
 
-    ui->tab_2->xAxis->setLabel("IO/s");
-    ui->tab_2->yAxis->setLabel("Вероятность");
+    ui->tab_2->xAxis->setLabel(tr("IO/s"));
+    ui->tab_2->yAxis->setLabel(tr("Вероятность"));
     // configure right and top axis to show ticks but no labels:
     // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
     ui->tab_2->xAxis2->setVisible(true);
@@ -258,48 +278,48 @@ void MainWindow::printSimGraph(simulation* sim)
     ui->tab_3->clearGraphs();
     ui->tab_3->clearItems();
     ui->tab_3->replot();
-    ui->statusBar->showMessage("Очистка графика симуляции", 500);
+    ui->statusBar->showMessage(tr("Очистка графика симуляции"), 500);
     ui->tab_4->clearGraphs();
     ui->tab_4->clearItems();
     ui->tab_4->replot();
-    ui->statusBar->showMessage("Очистка графика распределения вероятностей симуляции", 500);
+    ui->statusBar->showMessage(tr("Очистка графика распределения вероятностей симуляции"), 500);
 
     // Добавление текста:
     QCPItemText *textLabel = new QCPItemText(ui->tab_3);
     textLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
     textLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     textLabel->position->setCoords(0.5, 0); // позиция
-    textLabel->setText("Плотность вероятности операций ввода вывода для " + ui->userCount_edit->text() + " польз.");
+    textLabel->setText(tr("Плотность вероятности операций ввода вывода для ") + ui->userCount_edit->text() + tr(" польз."));
     textLabel->setFont(QFont(font().family(), 12)); // Размер шрифта
 
     QCPItemText *textLabel2 = new QCPItemText(ui->tab_4);
     textLabel2->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
     textLabel2->position->setType(QCPItemPosition::ptAxisRectRatio);
     textLabel2->position->setCoords(0.5, 0); // позиция
-    textLabel2->setText("Распределение вероятностей операций ввода вывода для " + ui->userCount_edit->text() + " польз.");
+    textLabel2->setText(tr("Распределение вероятностей операций ввода вывода для ") + ui->userCount_edit->text() + tr(" польз."));
     textLabel2->setFont(QFont(font().family(), 12)); // Размер шрифта
 
     ui->tab_3->addGraph();
     ui->tab_3->graph(0)->setPen(QPen(Qt::blue)); // Синяя линия, первый график
-    ui->tab_3->graph(0)->setName("Чтение");
+    ui->tab_3->graph(0)->setName(tr("Чтение"));
     ui->tab_3->addGraph();
     ui->tab_3->graph(1)->setPen(QPen(Qt::red)); // Красная линия, второй график
-    ui->tab_3->graph(1)->setName("Запись");
+    ui->tab_3->graph(1)->setName(tr("Запись"));
 
     ui->tab_4->addGraph();
     ui->tab_4->graph(0)->setPen(QPen(Qt::blue)); // Синяя линия, первый график
-    ui->tab_4->graph(0)->setName("Чтение");
+    ui->tab_4->graph(0)->setName(tr("Чтение"));
     ui->tab_4->addGraph();
     ui->tab_4->graph(1)->setPen(QPen(Qt::red)); // Красная линия, второй график
-    ui->tab_4->graph(1)->setName("Запись");
+    ui->tab_4->graph(1)->setName(tr("Запись"));
 
 
 
-    ui->tab_3->xAxis->setLabel("IO/s");
-    ui->tab_3->yAxis->setLabel("Вероятность");
+    ui->tab_3->xAxis->setLabel(tr("IO/s"));
+    ui->tab_3->yAxis->setLabel(tr("Вероятность"));
 
-    ui->tab_4->xAxis->setLabel("IO/s");
-    ui->tab_4->yAxis->setLabel("Вероятность");
+    ui->tab_4->xAxis->setLabel(tr("IO/s"));
+    ui->tab_4->yAxis->setLabel(tr("Вероятность"));
 
     // Настройка осей:
     ui->tab_3->xAxis2->setVisible(true);
@@ -345,10 +365,10 @@ void MainWindow::printSimGraph(simulation* sim)
 
 void MainWindow::on_screenShot_button_clicked()
 {
-    QString outputFile = QFileDialog::getSaveFileName(nullptr,"Сохранить изображение графика","./graph.png", "Images (*.png)");
+    QString outputFile = QFileDialog::getSaveFileName(nullptr,tr("Сохранить изображение графика"),"./graph.png", "Images (*.png)");
     QFile file(outputFile);
     if (!file.open(QIODevice::WriteOnly|QFile::WriteOnly)){
-        QMessageBox::warning(nullptr,"Не удаётся создать скриншот",
+        QMessageBox::warning(nullptr,tr("Не удаётся создать скриншот"),
         QObject::tr( "\n Не удаётся сохранить созданный график на диск!"));
     }
 
@@ -357,16 +377,16 @@ void MainWindow::on_screenShot_button_clicked()
 
     if(ui->tabWidget->currentIndex()==0){
         ui->tab->savePng(outputFile,0,0,1.0,-1);
-        ui->statusBar->showMessage("Сохранение изображения "+outputFile,2000 );
+        ui->statusBar->showMessage(tr("Сохранение изображения ")+outputFile,2000 );
     }else if(ui->tabWidget->currentIndex()==1){
         ui->tab_2->savePng(outputFile,0,0,1.0,-1);
-        ui->statusBar->showMessage("Сохранение изображения "+outputFile,2000 );
+        ui->statusBar->showMessage(tr("Сохранение изображения ")+outputFile,2000 );
     }else if(ui->tabWidget->currentIndex()==2){
         ui->tab_3->savePng( outputFile,0,0,1.0,-1);
-        ui->statusBar->showMessage("Сохранение изображения "+outputFile,2000 );
+        ui->statusBar->showMessage(tr("Сохранение изображения ")+outputFile,2000 );
     }else if(ui->tabWidget->currentIndex()==3){
         ui->tab_4->savePng( outputFile,0,0,1.0,-1);
-        ui->statusBar->showMessage("Сохранение изображения "+outputFile,2000 );
+        ui->statusBar->showMessage(tr("Сохранение изображения ")+outputFile,2000 );
     }
 }
 
@@ -384,4 +404,14 @@ void MainWindow::on_menu_about_triggered()
 void MainWindow::on_menu_exit_triggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::on_languageEn_triggered()
+{
+    changeTranslator("en");
+}
+
+void MainWindow::on_languageRu_triggered()
+{
+    changeTranslator("ru");
 }

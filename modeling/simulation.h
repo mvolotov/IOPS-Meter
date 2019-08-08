@@ -13,12 +13,13 @@ public:
     simulation(int, int);
     ~simulation();
     void simCalc(QVector<int>*,QVector<int>*);
-    //void clearPreviousData();
 
 signals:
     void sendStatus(QString msg);
 
 private:
+    QVector<int> *read_sim_data = new QVector<int>;
+    QVector<int> *write_sim_data = new QVector<int>;
     int clients;
     int runtime;
     int rrand();

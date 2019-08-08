@@ -24,18 +24,16 @@ void simulation::simCalc(QVector<int>* rd, QVector<int>* wd)
 
     int r, w;
 
-    QVector<int> *read_sim_data = new QVector<int>;
-    QVector<int> *write_sim_data = new QVector<int>;
-
     for (int i = 0; i < runtime; i++) {
         if(i % (runtime/100) == 0)
-            emit sendStatus("Прогресс моделирования " + QString::number((i/(runtime/100))) + "/" + QString::number((runtime/(runtime/100)))+"%");
+            emit sendStatus(tr("Прогресс моделирования ") + QString::number((i/(runtime/100))) + "/" + QString::number((runtime/(runtime/100)))+"%");
 
             r = w = 0;
             for (int j = 0; j < clients; j++) {
                 r += rrand();
                 w += wrand();
             }
+
             read_sim_data->push_back(r);
             write_sim_data->push_back(w);
     }
@@ -43,17 +41,17 @@ void simulation::simCalc(QVector<int>* rd, QVector<int>* wd)
     std::sort(read_sim_data->begin(),read_sim_data->end(), std::less<int>());
     std::sort(write_sim_data->begin(),write_sim_data->end(), std::less<int>());
 
-    emit sendStatus("Очистка данных");
+    emit sendStatus(tr("Очистка данных"));
     clearDensData();
     clearDistData();
 
-    emit sendStatus("Расчёт распределения плотности вероятности");
+    emit sendStatus(tr("Расчёт распределения плотности вероятности"));
     distCalc(read_sim_data, write_sim_data);
 
     delete read_sim_data;
     delete write_sim_data;
 
-    qDebug() << "Bench Time = " << timer.elapsed();
+    qDebug() << tr("Bench Time = ") << timer.elapsed();
 }
 
 int simulation::rrand()
@@ -83,4 +81,3 @@ int simulation::wrand()
     }
     return 0;
 }
-
