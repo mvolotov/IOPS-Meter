@@ -33,7 +33,6 @@ void MainWindow::getSimStatus(QString msg)
 
 void MainWindow::changeTranslator(QString postfix)
 {
-    qDebug() << "ChangeTranslator call!";
     QApplication::removeTranslator(qtLanguageTranslator);
     qtLanguageTranslator = new QTranslator(this);
     qtLanguageTranslator->load(":/Translations/IOPSMaster_" + postfix);
@@ -44,7 +43,6 @@ void MainWindow::changeEvent(QEvent *event)
 {
 
     if(event->type() == QEvent::LanguageChange){
-        qDebug() << "ChangeEvent call!";
         ui->retranslateUi(this);
     }else{
         QMainWindow::changeEvent(event);
